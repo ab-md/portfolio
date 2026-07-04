@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پیش‌نمایش پورتفولیو — Emerald Noir</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+
+  :root{
+    --bg: #111815;
+    --bg-2: #16201A;
+    --surface: #1C2620;
+    --accent: #4ADE80;
+    --accent-dim: #35A867;
+    --text: #EDEDED;
+    --text-dim: #AEB8B2;
+    --border: rgba(237,237,237,0.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x:hidden;
+  }
+  img { max-width:100%; display:block; }
+  ul { list-style:none; }
+  a { color:inherit; }
+
+  /* NAV */
+  header {
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 24px 64px;
+    position: relative;
+    z-index: 100;
+  }
+  .logo { font-size: 22px; font-weight:800; letter-spacing:0.5px; }
+  .logo span { color: var(--accent); }
+
+  nav.desktop-nav { display:flex; }
+  nav.desktop-nav > ul { display:flex; gap:34px; align-items:center; }
+  nav.desktop-nav > ul > li { position:relative; }
+  nav.desktop-nav a {
+    text-decoration:none; color: var(--text-dim); font-size:15px; font-weight:500;
+    display:flex; align-items:center; gap:5px; padding:8px 0;
+  }
+  nav.desktop-nav > ul > li.active > a,
+  nav.desktop-nav a:hover { color: var(--text); }
+  .caret { font-size:10px; transition: transform .2s; margin-top:2px; }
+  .has-dropdown:hover .caret { transform: rotate(180deg); }
+
+  .dropdown {
+    position:absolute; top:100%; right:0; margin-top:10px;
+    background: var(--surface); border:1px solid var(--border); border-radius:12px;
+    min-width:190px; padding:8px; opacity:0; visibility:hidden; transform:translateY(-8px);
+    transition: all .2s ease; box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+  }
+  .has-dropdown:hover .dropdown { opacity:1; visibility:visible; transform:translateY(0); }
+  .dropdown li a {
+    display:block; padding:10px 14px; border-radius:8px; font-size:14px; color:var(--text-dim);
+  }
+  .dropdown li a:hover { background: rgba(74,222,128,0.08); color: var(--accent); }
+
+  .nav-cta {
+    background: var(--accent); color: #0F1A12; padding: 11px 24px;
+    border-radius: 6px; font-size: 14px; font-weight:700; text-decoration:none;
+    white-space:nowrap;
+  }
+
+  .header-right { display:flex; align-items:center; gap:20px; }
+
+  /* HAMBURGER */
+  .hamburger {
+    display:none; flex-direction:column; gap:5px; background:none; border:none;
+    cursor:pointer; padding:6px; z-index:200;
+  }
+  .hamburger span {
+    width:24px; height:2px; background: var(--text); border-radius:2px;
+    transition: all .25s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity:0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* MOBILE NAV DRAWER */
+  .mobile-nav {
+    position: fixed; top:0; right:-100%; width:78%; max-width:320px; height:100vh;
+    background: var(--bg-2); border-left:1px solid var(--border);
+    z-index:150; padding: 90px 30px 30px; transition: right .3s ease;
+    overflow-y:auto;
+  }
+  .mobile-nav.open { right:0; }
+  .mobile-nav ul { display:flex; flex-direction:column; gap:6px; }
+  .mobile-nav > ul > li > a {
+    display:flex; align-items:center; justify-content:space-between;
+    text-decoration:none; color: var(--text); font-size:17px; font-weight:600;
+    padding: 14px 4px; border-bottom:1px solid var(--border);
+  }
+  .mobile-submenu { max-height:0; overflow:hidden; transition: max-height .25s ease; }
+  .mobile-submenu.open { max-height:200px; }
+  .mobile-submenu li a {
+    display:block; padding:12px 16px; color: var(--text-dim); font-size:15px; text-decoration:none;
+  }
+  .mobile-caret { font-size:12px; transition: transform .25s; }
+  .mobile-caret.rot { transform: rotate(180deg); }
+
+  .overlay {
+    position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:120;
+    opacity:0; visibility:hidden; transition: all .25s ease;
+  }
+  .overlay.open { opacity:1; visibility:visible; }
+
+  /* HERO */
+  .hero {
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 40px 64px 100px;
+    position: relative;
+    overflow: hidden;
+    gap: 40px;
+  }
+  .hero::before{
+    content:'';
+    position:absolute; top:-200px; left:-150px;
+    width:600px; height:600px; border-radius:50%;
+    background: radial-gradient(circle, rgba(74,222,128,0.10) 0%, rgba(74,222,128,0) 70%);
+    pointer-events:none;
+  }
+  .hero-text { max-width: 560px; position:relative; z-index:1; }
+  .eyebrow {
+    display:inline-flex; align-items:center; gap:8px;
+    color: var(--accent); font-size: 14px; font-weight:600;
+    margin-bottom: 22px;
+  }
+  .eyebrow::before{
+    content:''; width:8px; height:8px; border-radius:50%; background:var(--accent);
+    box-shadow: 0 0 0 4px rgba(74,222,128,0.15);
+  }
+  .hero h1 {
+    font-size: 48px; font-weight:800; line-height:1.4; margin-bottom:22px;
+  }
+  .hero h1 .accent { color: var(--accent); }
+  .hero p {
+    color: var(--text-dim); font-size: 16px; max-width: 460px; margin-bottom:34px;
+  }
+  .hero-actions { display:flex; gap:16px; flex-wrap:wrap; }
+  .btn-primary {
+    background: var(--accent); color:#0F1A12; padding:15px 30px; border-radius:6px;
+    font-weight:700; font-size:15px; text-decoration:none; display:inline-block;
+  }
+  .btn-ghost {
+    border:1px solid var(--border); color:var(--text); padding:15px 30px; border-radius:6px;
+    font-weight:600; font-size:15px; text-decoration:none; display:inline-block;
+  }
+  .hero-stats { display:flex; gap:44px; margin-top:56px; flex-wrap:wrap; }
+  .stat-num { font-size:28px; font-weight:800; color:var(--text); }
+  .stat-label { font-size:13px; color:var(--text-dim); margin-top:4px; }
+
+  .hero-visual {
+    width: 380px; height: 440px; border-radius: 20px; position:relative; z-index:1;
+    background: linear-gradient(160deg, var(--surface), var(--bg-2));
+    border: 1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .hero-visual .ph {
+    width:70%; height:70%; border-radius:14px;
+    background: linear-gradient(145deg, rgba(74,222,128,0.14), rgba(74,222,128,0.02));
+    border:1px solid rgba(74,222,128,0.2);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--accent); font-size:13px; font-weight:600; letter-spacing:1px;
+    text-align:center; padding:20px;
+  }
+
+  /* SECTION SHELL */
+  section { padding: 90px 64px; }
+  .section-head { text-align:center; max-width:560px; margin: 0 auto 56px; }
+  .section-tag { color: var(--accent); font-size:13px; font-weight:700; letter-spacing:1px; margin-bottom:14px; }
+  .section-head h2 { font-size:32px; font-weight:800; margin-bottom:14px; }
+  .section-head p { color: var(--text-dim); font-size:15px; }
+
+  /* ABOUT */
+  .about { background: var(--bg-2); display:flex; align-items:center; gap:64px; padding:90px 64px; }
+  .about-visual {
+    width: 320px; height:380px; border-radius:16px; flex-shrink:0;
+    background: var(--surface); border:1px solid var(--border);
+  }
+  .about-text { flex:1; }
+  .about-text h2 { font-size:28px; font-weight:800; margin-bottom:18px; }
+  .about-text p { color: var(--text-dim); font-size:15px; margin-bottom:28px; max-width:480px; }
+  .skill-tags { display:flex; flex-wrap:wrap; gap:10px; }
+  .tag {
+    background: var(--surface); border:1px solid var(--border);
+    padding: 8px 16px; border-radius:20px; font-size:13px; color:var(--text);
+  }
+
+  /* WORKS GRID */
+  .works-grid {
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:28px;
+  }
+  .work-card {
+    background: var(--surface); border-radius:14px; overflow:hidden;
+    border: 1px solid var(--border);
+  }
+  .work-thumb {
+    height: 180px;
+    background: linear-gradient(135deg, rgba(74,222,128,0.16), rgba(28,38,32,0.4));
+    display:flex; align-items:center; justify-content:center;
+    color: var(--accent); font-size:12px; font-weight:700; letter-spacing:1px;
+  }
+  .work-body { padding: 22px 24px 26px; }
+  .work-cat { color: var(--accent); font-size:12px; font-weight:700; margin-bottom:8px; }
+  .work-body h3 { font-size:18px; font-weight:700; margin-bottom:8px; }
+  .work-body p { color:var(--text-dim); font-size:13.5px; }
+
+  /* SERVICES */
+  .services { background: var(--bg-2); }
+  .services-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .service-card { background: var(--bg); border:1px solid var(--border); border-radius:14px; padding:32px 28px; }
+  .service-icon {
+    width:48px; height:48px; border-radius:10px; background: rgba(74,222,128,0.12);
+    display:flex; align-items:center; justify-content:center; margin-bottom:20px;
+    color: var(--accent); font-weight:800; font-size:18px;
+  }
+  .service-card h3 { font-size:17px; font-weight:700; margin-bottom:10px; }
+  .service-card p { color:var(--text-dim); font-size:13.5px; }
+
+  /* CTA */
+  .cta-band {
+    background: var(--surface); border-radius:20px; margin: 0 64px 90px;
+    padding: 70px 64px; text-align:center;
+    border: 1px solid var(--border);
+  }
+  .cta-band h2 { font-size:30px; font-weight:800; margin-bottom:16px; }
+  .cta-band p { color:var(--text-dim); margin-bottom:32px; }
+
+  footer {
+    padding: 40px 64px; display:flex; justify-content:space-between; align-items:center;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim); font-size:13px; flex-wrap:wrap; gap:16px;
+  }
+  .footer-social { display:flex; gap:20px; }
+  .footer-social a { text-decoration:none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    header { padding: 20px 24px; }
+    nav.desktop-nav { display:none; }
+    .header-right .nav-cta { display:none; }
+    .hamburger { display:flex; }
+
+    .hero { flex-direction:column-reverse; padding: 30px 24px 60px; text-align:center; gap:36px; }
+    .hero-text { max-width:100%; }
+    .hero h1 { font-size:34px; }
+    .hero p { margin-left:auto; margin-right:auto; }
+    .hero-actions { justify-content:center; }
+    .hero-stats { justify-content:center; }
+    .hero-visual { width:100%; max-width:340px; height:300px; }
+
+    section { padding: 56px 24px; }
+    .section-head h2 { font-size:26px; }
+
+    .about { flex-direction:column; padding:56px 24px; text-align:center; }
+    .about-text h2 { font-size:24px; }
+    .about-visual { width:100%; max-width:300px; }
+    .skill-tags { justify-content:center; }
+
+    .works-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+
+    .cta-band { margin: 0 24px 60px; padding:44px 24px; }
+    .cta-band h2 { font-size:24px; }
+
+    footer { flex-direction:column; text-align:center; padding:28px 24px; }
+  }
+
+  @media (max-width: 420px) {
+    .hero h1 { font-size:28px; }
+    .hero-stats { gap:28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<header>
+  <div class="logo">ابوالفضل<span>.</span></div>
+
+  <nav class="desktop-nav">
+    <ul>
+      <li class="active"><a href="#">خانه</a></li>
+      <li><a href="#">نمونه‌کارها</a></li>
+      <li class="has-dropdown">
+        <a href="#">خدمات <span class="caret">▾</span></a>
+        <ul class="dropdown">
+          <li><a href="#">توسعه رابط کاربری</a></li>
+          <li><a href="#">اپلیکیشن Next.js</a></li>
+          <li><a href="#">صفحه فرود</a></li>
+        </ul>
+      </li>
+      <li><a href="#">درباره من</a></li>
+      <li><a href="#">وبلاگ</a></li>
+    </ul>
+  </nav>
+
+  <div class="header-right">
+    <a href="#" class="nav-cta">تماس با من</a>
+    <button class="hamburger" id="hamburger" aria-label="باز کردن منو">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <ul>
+    <li><a href="#">خانه</a></li>
+    <li><a href="#">نمونه‌کارها</a></li>
+    <li>
+      <a href="#" id="mobileDropdownToggle">
+        خدمات <span class="mobile-caret" id="mobileCaret">▾</span>
+      </a>
+      <ul class="mobile-submenu" id="mobileSubmenu">
+        <li><a href="#">توسعه رابط کاربری</a></li>
+        <li><a href="#">اپلیکیشن Next.js</a></li>
+        <li><a href="#">صفحه فرود</a></li>
+      </ul>
+    </li>
+    <li><a href="#">درباره من</a></li>
+    <li><a href="#">وبلاگ</a></li>
+    <li><a href="#">تماس با من</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-text">
+    <div class="eyebrow">آماده همکاری فریلنسری</div>
+    <h1>توسعه‌دهنده فرانت‌اند<br>می‌سازم رابط‌های <span class="accent">تمیز</span> و مدرن</h1>
+    <p>من ابوالفضل مددی هستم — طراحی و توسعه رابط‌های کاربری سریع و مدرن با React و Next.js، با تمرکز روی جزئیات، عملکرد و تجربه کاربری.</p>
+    <div class="hero-actions">
+      <a href="#" class="btn-primary">مشاهده نمونه‌کارها</a>
+      <a href="#" class="btn-ghost">تماس با من</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-num">+۴۰</div><div class="stat-label">پروژه انجام‌شده</div></div>
+      <div><div class="stat-num">+۵</div><div class="stat-label">سال تجربه</div></div>
+      <div><div class="stat-num">+۳۰</div><div class="stat-label">مشتری راضی</div></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="ph">تصویر پروفایل</div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="about-visual"></div>
+  <div class="about-text">
+    <div class="section-tag">درباره من</div>
+    <h2>ایده‌ها را به رابط‌های سریع و زیبا تبدیل می‌کنم</h2>
+    <p>با پیش‌زمینه‌ای در React و Next.js، تمرکزم روی ساخت رابط‌هایی‌ست که ساده، سریع و در هر اندازه صفحه‌نمایش کاربردی باشند. در حال حاضر مقیم ایران و همکاری با مشتریان داخلی و خارجی.</p>
+    <div class="skill-tags">
+      <div class="tag">React</div>
+      <div class="tag">Next.js</div>
+      <div class="tag">Tailwind CSS</div>
+      <div class="tag">Framer Motion</div>
+      <div class="tag">JavaScript</div>
+    </div>
+  </div>
+</section>
+
+<section class="works">
+  <div class="section-head">
+    <div class="section-tag">نمونه‌کارهای منتخب</div>
+    <h2>پروژه‌های اخیر</h2>
+    <p>چند نمونه از کارهایی که اخیراً ساخته‌ام — از صفحات فرود تا رابط‌های کامل محصول.</p>
+  </div>
+  <div class="works-grid">
+    <div class="work-card">
+      <div class="work-thumb">پروژه ۰۱</div>
+      <div class="work-body">
+        <div class="work-cat">اپلیکیشن وب</div>
+        <h3>داشبورد مدیریتی</h3>
+        <p>داشبورد ادمین با حالت تیره و نمودارهای داده.</p>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-thumb">پروژه ۰۲</div>
+      <div class="work-body">
+        <div class="work-cat">صفحه فرود</div>
+        <h3>سایت معرفی SaaS</h3>
+        <p>صفحه فرود با تمرکز بر نرخ تبدیل، ساخته‌شده با Next.js.</p>
+      </div>
+    </div>
+    <div class="work-card">
+      <div class="work-thumb">پروژه ۰۳</div>
+      <div class="work-body">
+        <div class="work-cat">فروشگاهی</div>
+        <h3>رابط فروشگاه آنلاین</h3>
+        <p>فروشگاه سریع و ریسپانسیو با سبد خرید و فرآیند پرداخت.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services">
+  <div class="section-head">
+    <div class="section-tag">خدمات</div>
+    <h2>چطور می‌تونم کمک کنم</h2>
+    <p>خدمات تخصصی فرانت‌اند برای فریلنسرها، استارتاپ‌ها و تیم‌ها.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">۰۱</div>
+      <h3>توسعه رابط کاربری</h3>
+      <p>رابط‌های دقیق و ریسپانسیو ساخته‌شده با React و Tailwind.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">۰۲</div>
+      <h3>اپلیکیشن‌های Next.js</h3>
+      <p>ساخت کامل فرانت‌اند با روتینگ، SSR و بهینه‌سازی عملکرد.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">۰۳</div>
+      <h3>صفحات فرود</h3>
+      <p>صفحات فرود سریع و متمرکز بر تبدیل که آنی لود می‌شوند.</p>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>بیایید با هم چیزی بسازیم</h2>
+  <p>پروژه‌ای در ذهن دارید؟ در حال حاضر آماده همکاری فریلنسری جدید هستم.</p>
+  <a href="#" class="btn-primary">در تماس باشید</a>
+</div>
+
+<footer>
+  <div>© ۲۰۲۶ ابوالفضل مددی. تمامی حقوق محفوظ است.</div>
+  <div class="footer-social">
+    <a href="#">گیت‌هاب</a>
+    <a href="#">لینکدین</a>
+    <a href="#">توییتر</a>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  const overlay = document.getElementById('overlay');
+  const mobileDropdownToggle = document.getElementById('mobileDropdownToggle');
+  const mobileSubmenu = document.getElementById('mobileSubmenu');
+  const mobileCaret = document.getElementById('mobileCaret');
+
+  function toggleMenu() {
+    hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open');
+    overlay.classList.toggle('open');
+  }
+
+  hamburger.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', toggleMenu);
+
+  mobileDropdownToggle.addEventListener('click', function(e){
+    e.preventDefault();
+    mobileSubmenu.classList.toggle('open');
+    mobileCaret.classList.toggle('rot');
+  });
+</script>
+
+</body>
+</html>
