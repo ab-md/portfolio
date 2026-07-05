@@ -25,12 +25,15 @@ export default function Hero() {
         <h1 className="text-[28px] md:text-[48px] font-extrabold leading-[1.4] mb-5">
           توسعه‌دهنده فرانت‌اند
           <br />
-          می‌سازم رابط‌های <span className="text-accent">تمیز</span> و مدرن
+          {/* می‌سازم رابط‌های <span className="text-accent">تمیز</span> و مدرن */}
+          با تمرکز بر 
+          <span className="text-accent"> React </span> 
+          و 
+          <span className="text-accent"> Next.js</span>
         </h1>
 
         <p className="text-ink-dim text-base max-w-[460px] mx-auto md:mx-0 mb-8">
-          من ابوالفضل مددی هستم — طراحی و توسعه رابط‌های کاربری سریع و مدرن با
-          React و Next.js، با تمرکز روی جزئیات، عملکرد و تجربه کاربری.
+          من ابوالفضل مددی هستم — رابط‌های کاربری سریع، واکنشگرا و مدرن طراحی میکنم و در مسیر تبدیل شدن به یک توسعه‌دهنده‌ی full-stack با node.js هستم.
         </p>
 
         <div className="flex flex-wrap gap-4 justify-center md:justify-start">

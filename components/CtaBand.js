@@ -8,10 +8,10 @@ export default function CtaBand() {
   return (
     <div className="bg-surface mt-12 border border-white/[0.08] rounded-[20px] mx-6 md:mx-16 mb-14 md:mb-24 px-6 md:px-16 py-11 md:py-[70px] text-center">
       <h2 className="text-2xl md:text-[30px] font-extrabold mb-4">
-        بیایید با هم چیزی بسازیم
+        راه ارتباطی با من
       </h2>
       <p className="text-ink-dim mb-8">
-        پروژه‌ای در ذهن دارید؟ در حال حاضر آماده همکاری فریلنسری جدید هستم.
+        اگر برای همکاری، استخدام یا اجرای یک پروژه وب به دنبال توسعه‌دهنده Front-end هستید، خوشحال می‌شوم با هم در ارتباط باشیم.
       </p>
       <button
         onClick={open}
