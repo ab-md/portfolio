@@ -2,20 +2,22 @@
 
 import { useState } from "react";
 import { useContactModal } from "@/context/ContactModalContext";
+import Link from "next/link";
 
 const navLinks = [
-  { label: "خانه", href: "#" },
-  { label: "نمونه‌کارها", href: "#" },
-  {
-    label: "خدمات",
-    href: "#",
-    submenu: [
-      { label: "توسعه رابط کاربری", href: "#" },
-      { label: "اپلیکیشن Next.js", href: "#" },
-      { label: "صفحه فرود", href: "#" },
-    ],
-  },
-  { label: "درباره من", href: "#" },
+  { label: "خانه", href: "/" },
+  { label: "درباره من", href: "#about" },
+  // {
+  //   label: "خدمات",
+  //   href: "#",
+  //   submenu: [
+  //     { label: "توسعه رابط کاربری", href: "#" },
+  //     { label: "اپلیکیشن Next.js", href: "#" },
+  //     { label: "صفحه فرود", href: "#" },
+  //   ],
+  // },
+  { label: "نمونه‌کارها", href: "#works" },
+  // { label: "تماس با من", href: "#contact" },
   { label: "وبلاگ", href: "#" },
 ];
 
@@ -36,7 +38,7 @@ export default function Header() {
           <ul className="flex items-center gap-9">
             {navLinks.map((link) => (
               <li key={link.label} className="relative group">
-                <a
+                <Link
                   href={link.href}
                   className="flex items-center gap-1 text-ink-dim hover:text-ink text-[15px] font-medium py-2 transition-colors"
                 >
@@ -46,7 +48,7 @@ export default function Header() {
                       ▾
                     </span>
                   )}
-                </a>
+                </Link>
 
                 {link.submenu && (
                   <ul
@@ -57,12 +59,12 @@ export default function Header() {
                   >
                     {link.submenu.map((item) => (
                       <li key={item.label}>
-                        <a
+                        <Link
                           href={item.href}
                           className="block px-3.5 py-2.5 rounded-lg text-sm text-ink-dim hover:bg-accent/[0.08] hover:text-accent transition-colors"
                         >
                           {item.label}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>

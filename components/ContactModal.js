@@ -122,7 +122,7 @@ export default function ContactModal() {
             </div>
 
             <a
-              href="https://t.me/pheonix-tch"
+              href="https://t.me/phoenix_tch"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 border border-white/[0.08]

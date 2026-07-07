@@ -26,7 +26,7 @@ export default function Hero() {
           توسعه‌دهنده فرانت‌اند
           <br />
           {/* می‌سازم رابط‌های <span className="text-accent">تمیز</span> و مدرن */}
-          با تمرکز بر 
+          با  
           <span className="text-accent"> React </span> 
           و 
           <span className="text-accent"> Next.js</span>
@@ -38,7 +38,7 @@ export default function Hero() {
 
         <div className="flex flex-wrap gap-4 justify-center md:justify-start">
           <a
-            href="#"
+            href="#works"
             className="bg-accent text-[#0F1A12] px-7 py-4 rounded-md font-bold text-[15px]"
           >
             مشاهده نمونه‌کارها

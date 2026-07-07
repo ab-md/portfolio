@@ -4,7 +4,7 @@ const skills = ["React", "Next.js", "Tailwind CSS", "Framer Motion", "JavaScript
 
 export default function About() {
   return (
-    <section className="bg-base-2 flex flex-col md:flex-row items-center gap-12 md:gap-16 px-6 md:px-16 py-14 md:py-24 text-center md:text-right">
+    <section id="about" className="bg-base-2 flex flex-col md:flex-row items-center gap-12 md:gap-16 px-6 md:px-16 py-14 md:py-24 text-center md:text-right">
       <div className="about w-full max-w-[300px] md:max-w-[320px] h-[300px] md:h-[380px] rounded-2xl bg-surface border border-white/[0.08] flex-shrink-0">
         {/* <Image 
         src={"/assets/aboutBanner.png"}
