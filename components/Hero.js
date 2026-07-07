@@ -26,14 +26,14 @@ export default function Hero() {
           توسعه‌دهنده فرانت‌اند
           <br />
           {/* می‌سازم رابط‌های <span className="text-accent">تمیز</span> و مدرن */}
-          با  
-          <span className="text-accent"> React </span> 
-          و 
+          با
+          <span className="text-accent"> React </span>
+          و
           <span className="text-accent"> Next.js</span>
         </h1>
 
         <p className="text-ink-dim text-base max-w-[460px] mx-auto md:mx-0 mb-8">
-          من ابوالفضل مددی هستم — رابط‌های کاربری سریع، واکنشگرا و مدرن طراحی میکنم و در مسیر تبدیل شدن به یک توسعه‌دهنده‌ی full-stack با node.js هستم.
+          طراحی و توسعه رابط‌های کاربری سریع، واکنش‌گرا و قابل نگهداری با تمرکز بر تجربه کاربری. در مسیر یادگیری Node.js و توسعه Full Stack هستم.
         </p>
 
         <div className="flex flex-wrap gap-4 justify-center md:justify-start">
@@ -83,14 +83,14 @@ export default function Hero() {
             borderColor: "rgba(74,222,128,0.2)",
           }}
         >
-          <Image 
-          src={"/assets/home/heroBanner.jpg"}
-          alt="Abolfazl Madadi"
-          // width={500} 
-          // height={700}
-          fill
-          className="object-cover object-top"
-          priority
+          <Image
+            src={"/assets/home/heroBanner.jpg"}
+            alt="Abolfazl Madadi"
+            // width={500} 
+            // height={700}
+            fill
+            className="object-cover object-top"
+            priority
           />
         </div>
       </div>
