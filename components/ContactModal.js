@@ -5,7 +5,7 @@ import { useContactModal } from "@/context/ContactModalContext";
 
 export default function ContactModal() {
   const { isOpen, close } = useContactModal();
-  const [status, setStatus] = useState("idle"); // idle | sending | sent
+  const [status, setStatus] = useState("idle"); // idle | sending | sent | error
 
   // بستن با کلید Escape
   useEffect(() => {
@@ -24,13 +24,30 @@ export default function ContactModal() {
 
   if (!isOpen) return null;
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setStatus("sending");
-    // TODO: اینجا به API یا سرویس ایمیل خودت وصل کن
-    setTimeout(() => {
+
+    const formData = new FormData(e.target);
+    const payload = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error("failed");
+
       setStatus("sent");
-    }, 900);
+    } catch (err) {
+      setStatus("error");
+    }
   }
 
   return (
@@ -72,6 +89,7 @@ export default function ContactModal() {
                 <label className="block text-xs text-ink-dim mb-1.5">نام</label>
                 <input
                   type="text"
+                  name="name"
                   required
                   placeholder="نام شما"
                   className="w-full bg-base border border-white/[0.08] rounded-lg px-4 py-3
@@ -84,6 +102,7 @@ export default function ContactModal() {
                 <label className="block text-xs text-ink-dim mb-1.5">ایمیل</label>
                 <input
                   type="email"
+                  name="email"
                   required
                   placeholder="you@example.com"
                   className="w-full bg-base border border-white/[0.08] rounded-lg px-4 py-3
@@ -96,6 +115,7 @@ export default function ContactModal() {
               <div>
                 <label className="block text-xs text-ink-dim mb-1.5">پیام</label>
                 <textarea
+                  name="message"
                   required
                   rows={4}
                   placeholder="کمی درباره پروژه‌تون بگید..."
@@ -113,6 +133,12 @@ export default function ContactModal() {
               >
                 {status === "sending" ? "در حال ارسال..." : "ارسال پیام"}
               </button>
+
+              {status === "error" && (
+                <p className="text-red-400 text-xs text-center -mt-1">
+                  ارسال پیام با خطا مواجه شد. لطفاً دوباره امتحان کنید یا از راه تلگرام پیام بدید.
+                </p>
+              )}
             </form>
 
             <div className="flex items-center gap-3 my-6">
@@ -153,3 +179,5 @@ export default function ContactModal() {
     </div>
   );
 }
+
+
