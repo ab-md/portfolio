@@ -52,7 +52,7 @@ export default function Works() {
   }, []);
 
   return (
-    <section ref={containerRef} className="px-6 md:px-16 py-14 md:py-24">
+    <section id="works" ref={containerRef} className="px-6 md:px-16 py-14 md:py-24">
       <div className="text-center max-w-[560px] mx-auto mb-12 md:mb-14">
         <div className="text-accent text-sm font-bold mb-3.5">نمونه‌کارهای منتخب</div>
         <h2 className="text-[26px] md:text-[32px] font-extrabold mb-3.5">پروژه‌های اخیر</h2>
