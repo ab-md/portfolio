@@ -10,8 +10,16 @@ const vazirmatn = Vazirmatn({
 });
 
 export const metadata = {
-  title: "ابوالفضل مددی | توسعه‌دهنده فرانت‌اند",
-  description: "پورتفولیوی ابوالفضل مددی — توسعه‌دهنده فرانت‌اند متخصص React و Next.js",
+  title: "ابوالفضل مددی | Front-end Developer",
+  description:
+    "پورتفولیو شخصی ابوالفضل مددی، توسعه‌دهنده Front-end با React و Next.js",
+  keywords: [
+    "Abolfazl Madadi",
+    "ابوالفضل مددی",
+    "React Developer",
+    "Next.js",
+    "Front-end Developer",
+  ],
 };
 
 export default function RootLayout({ children }) {
