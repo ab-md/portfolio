@@ -25,7 +25,6 @@ export default function Hero() {
         <h1 className="text-[28px] md:text-[48px] font-extrabold leading-[1.4] mb-5">
           توسعه‌دهنده فرانت‌اند
           <br />
-          {/* می‌سازم رابط‌های <span className="text-accent">تمیز</span> و مدرن */}
           با
           <span className="text-accent"> React </span>
           و

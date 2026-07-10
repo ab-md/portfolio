@@ -1,6 +1,3 @@
-// app/layout.js
-// نصب فونت: npm install در پروژه لازم نیست، از next/font/google استفاده می‌کنیم
-
 import { Vazirmatn } from "next/font/google";
 import "./globals.css";
 import { ContactModalProvider } from "@/context/ContactModalContext";

@@ -18,7 +18,7 @@ const navLinks = [
   // },
   { label: "نمونه‌کارها", href: "#works" },
   // { label: "تماس با من", href: "#contact" },
-  { label: "وبلاگ", href: "#" },
+  { label: "وبلاگ", href: "/blog" },
 ];
 
 export default function Header() {

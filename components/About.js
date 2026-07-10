@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const skills = ["React", "Next.js", "Tailwind CSS", "Framer Motion", "JavaScript"];
+const skills = ["React", "Next.js", "Tailwind CSS", "JavaScript", "Redux"];
 
 export default function About() {
   return (
