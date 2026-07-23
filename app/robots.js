@@ -4,6 +4,6 @@ export default function robots() {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://portfolio-tau-peach-gnvigacep1.vercel.app/sitemap.xml",
+    sitemap: "https://www.phoenixdev.ir/sitemap.xml",
   };
 }
